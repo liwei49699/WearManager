@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ruffian.library.widget.RRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:background_normal="@color/white"
+    app:corner_radius="6dp">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="姓名"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:maxWidth="130dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_unit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="单位名称"
+        android:layout_below="@+id/tv_name"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:maxWidth="130dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_margin="10dp"/>
+
+    <TextView
+        android:id="@+id/tv_power"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="手表电量"
+        android:layout_below="@+id/tv_unit"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:maxWidth="130dp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:layout_margin="10dp"/>
+
+
+    <ImageView
+        android:id="@+id/iv_phone"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:src="@drawable/ic_iv_phone"
+        android:layout_margin="10dp"
+        android:layout_below="@+id/tv_power"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:gravity="center_vertical"
+        android:text="123-1313-1313"
+        android:textColor="@color/colorPrimary"
+        android:textSize="15sp"
+        android:layout_toRightOf="@+id/iv_phone"
+        android:layout_alignBottom="@+id/iv_phone"/>
+</com.ruffian.library.widget.RRelativeLayout>

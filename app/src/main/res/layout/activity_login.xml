@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    tools:context=".LoginActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBgNormal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:layout_marginTop="100dp"
+            android:paddingTop="95dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:id="@+id/rl_account"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp">
+
+                    <ImageView
+                        android:id="@+id/iv_sign_account"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_account_sign"/>
+
+                    <EditText
+                        android:id="@+id/et_account"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="请输入账号"
+                        android:textSize="16sp"
+                        android:maxLines="1"
+                        android:textColor="@color/tv_content"
+                        android:inputType="number"
+                        android:layout_toRightOf="@+id/iv_sign_account"
+                        android:layout_toLeftOf="@+id/iv_account_choose"
+                        android:layout_alignBottom="@+id/iv_sign_account"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"/>
+
+                    <ImageView
+                        android:id="@+id/iv_account_choose"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:visibility="invisible"
+                        android:layout_alignBottom="@+id/iv_sign_account"
+                        android:src="@drawable/ic_account_sign"/>
+
+                    <View
+                        android:id="@+id/v_line"
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/v_line"
+                        android:layout_below="@+id/iv_sign_account"
+                        android:layout_marginTop="10dp"/>
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rl_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:layout_marginTop="30dp">
+
+                    <ImageView
+                        android:id="@+id/iv_sign_password"
+                        android:layout_width="20dp"
+                        android:scaleType="centerInside"
+                        android:layout_height="20dp"
+                        android:src="@drawable/ic_password_sign"/>
+
+                    <EditText
+                        android:id="@+id/et_password_set"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@null"
+                        android:hint="请输入密码"
+                        android:textSize="16sp"
+                        android:maxLines="1"
+                        android:textColor="@color/colorTvNormal"
+                        android:inputType="textPassword"
+                        android:layout_alignBottom="@+id/iv_sign_password"
+                        android:layout_toRightOf="@+id/iv_sign_password"
+                        android:layout_toLeftOf="@+id/iv_password_show"
+                        android:layout_marginRight="20dp"
+                        android:layout_marginLeft="20dp"/>
+
+                    <ImageView
+                        android:id="@+id/iv_password_show"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentRight="true"
+                        android:src="@drawable/iv_password_show"
+                        android:layout_alignBottom="@+id/iv_sign_password"/>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/v_line"
+                        android:layout_below="@+id/iv_sign_password"
+                        android:layout_marginTop="10dp"/>
+
+                </RelativeLayout>
+
+
+                <Button
+                    android:id="@+id/btn_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginRight="30dp"
+                    android:text="登录"
+                    android:textSize="20sp"
+                    android:textColor="@color/white"
+                    android:layout_gravity="center_horizontal"
+                    android:background="@drawable/btn_bg_login"
+                    android:layout_marginTop="80dp"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</androidx.core.widget.NestedScrollView>
+

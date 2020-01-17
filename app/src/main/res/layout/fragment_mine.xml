@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/space"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:text="头像"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="15dp"/>
+
+        <com.ruffian.library.widget.RImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:corner_radius="5dp"
+            app:icon_src_normal="@color/colorPrimary"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:layout_alignParentRight="true"/>
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/space"
+        android:layout_marginLeft="15dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:text="用户名"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/tv_version_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="用户12313"
+            android:layout_alignParentRight="true"
+            android:textSize="16sp"
+            android:layout_marginRight="20dp"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/space"
+        android:layout_marginLeft="15dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/tv_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:text="单位名称"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:id="@+id/tv_unit_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="南京承臻医疗"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:gravity="end"
+            android:layout_toRightOf="@+id/tv_unit"
+            android:layout_alignParentRight="true"
+            android:textSize="16sp"
+            android:layout_marginRight="20dp"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/space"
+        android:layout_marginLeft="15dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16dp"
+            android:text="地址"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="15dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="南京市玄武区环园大道"
+            android:paddingLeft="10dp"
+            android:singleLine="true"
+            android:gravity="end"
+            android:layout_alignParentRight="true"
+            android:textSize="16sp"
+            android:layout_marginRight="20dp"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/space"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_change_password"
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="50dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="修改密码"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="15sp"/>
+
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="15dp"
+            android:src="@drawable/ic_more_show"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="18dp"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/space"
+        android:layout_marginLeft="15dp"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_setting"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            android:text="设置"
+            android:layout_centerVertical="true"
+            android:textColor="@color/color_333333"
+            android:layout_marginLeft="15dp"/>
+
+        <ImageView
+            android:layout_width="9dp"
+            android:layout_height="15dp"
+            android:src="@drawable/ic_more_show"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="18dp"
+            android:layout_alignParentRight="true"/>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/space"/>
+
+    <com.ruffian.library.widget.RRelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/space"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        app:corner_radius="5dp"
+        app:background_normal="@color/colorPrimary"
+        android:layout_marginEnd="20dp">
+
+        <TextView
+            android:id="@+id/tv_logout"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:text="退出登录"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:gravity="center"/>
+
+    </com.ruffian.library.widget.RRelativeLayout>
+
+</LinearLayout>

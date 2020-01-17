@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.ruffian.library.widget.RRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_marker"
+    app:corner_radius="5dp"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp"
+    android:paddingTop="10dp"
+    android:paddingBottom="10dp"
+    app:background_normal="@color/colorPrimary">
+
+    <TextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="张三"
+        android:textSize="14sp"
+        android:layout_centerHorizontal="true"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textColor="@color/white"/>
+
+    <TextView
+        android:id="@+id/tv_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:text="60%"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/tv_name"
+        android:layout_marginTop="5dp"
+        android:textColor="@color/white"/>
+
+</com.ruffian.library.widget.RRelativeLayout>
