@@ -1,4 +1,4 @@
 package com.chengzhen.wearmanager.bean;
 
-public class DeviceListEvent {
+public class AlarmSetBean {
 }
