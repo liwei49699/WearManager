@@ -1,10 +1,12 @@
-package com.chengzhen.wearmanager;
+package com.chengzhen.wearmanager.view;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import com.chengzhen.wearmanager.R;
 
 public class LoadingDialog extends Dialog {
 

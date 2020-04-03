@@ -1,5 +1,6 @@
 package com.chengzhen.wearmanager;
 
+
 import com.amap.api.maps.model.LatLng;
 
 public class Constants {

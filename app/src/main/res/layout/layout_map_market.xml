@@ -1,38 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.ruffian.library.widget.RRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/rl_marker"
-    app:corner_radius="5dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingTop="10dp"
-    android:paddingBottom="10dp"
-    app:background_normal="@color/colorPrimary">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/tv_name"
+    <ImageView
+        android:id="@+id/iv_status"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:scaleType="centerCrop"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_map_offline"/>
+
+    <com.ruffian.library.widget.RRelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="张三"
-        android:textSize="14sp"
-        android:layout_centerHorizontal="true"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:textColor="@color/white"/>
+        android:layout_below="@+id/iv_status"
+        app:corner_radius="5dp"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        app:border_width_normal="1px"
+        app:border_color_normal="#9900C183"
+        app:background_normal="#DDFFFFFF">
 
-    <TextView
-        android:id="@+id/tv_price"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="13sp"
-        android:maxLines="1"
-        android:ellipsize="end"
-        android:text="60%"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/tv_name"
-        android:layout_marginTop="5dp"
-        android:textColor="@color/white"/>
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:text="张三"
+            android:textSize="14sp"
+            android:layout_centerHorizontal="true"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:gravity="center"
+            android:ellipsize="end"
+            android:textColor="@color/black"/>
 
-</com.ruffian.library.widget.RRelativeLayout>
+        <TextView
+            android:id="@+id/tv_power"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:textSize="13sp"
+            android:gravity="top"
+            android:maxLines="1"
+            android:visibility="gone"
+            android:ellipsize="end"
+            android:text="电量：30%"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/tv_name"
+            android:textColor="@color/color_333333"/>
+    </com.ruffian.library.widget.RRelativeLayout>
+</RelativeLayout>

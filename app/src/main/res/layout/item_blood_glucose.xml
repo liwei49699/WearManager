@@ -10,27 +10,30 @@
         android:layout_height="wrap_content">
 
         <TextView
+            android:id="@+id/tv_measure_time"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:text="3/08 12:25:03"
+            android:text="----"
             android:layout_weight="1"
             android:gravity="center"
             android:textSize="14sp"
             android:textColor="@color/color_666666"/>
 
         <TextView
+            android:id="@+id/tv_meal_before_show"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:text="163mmHg"
+            android:text="----mmol/L"
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/color_green_dark"
             android:textSize="14sp"/>
 
         <TextView
+            android:id="@+id/tv_meal_after_show"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:text="---mmHg"
+            android:text="----mmol/L"
             android:textSize="14sp"
             android:layout_weight="1"
             android:gravity="center"
@@ -43,4 +46,10 @@
         android:layout_height="1.5dp"
         android:alpha="0.3"
         android:background="@drawable/bg_dash_line"/>
+
+    <View
+        android:id="@+id/v_line_end"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/color_green_dark"/>
 </LinearLayout>

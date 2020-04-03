@@ -4,14 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SplashActivity">
+    tools:context=".activity.SplashActivity">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="启动页"
-        android:textSize="20sp"
-        android:textColor="@color/colorTvNormal"
+        android:text="平台系统启动中请稍后......"
+        android:layout_alignParentBottom="true"
+        android:textSize="18sp"
+        android:layout_marginBottom="50dp"
+        android:textColor="@color/color_939393"
         android:layout_centerInParent="true"/>
 
 

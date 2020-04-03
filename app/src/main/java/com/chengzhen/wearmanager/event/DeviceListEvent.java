@@ -1,4 +1,6 @@
-package com.chengzhen.wearmanager.bean;
+package com.chengzhen.wearmanager.event;
+
+import com.chengzhen.wearmanager.bean.DevicePageListResponse;
 
 import java.util.List;
 

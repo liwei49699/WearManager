@@ -1,7 +1,10 @@
-package com.chengzhen.wearmanager;
+package com.chengzhen.wearmanager.manager;
 
 import android.app.Activity;
 import android.os.Process;
+import android.util.Log;
+
+import com.chengzhen.wearmanager.base.BaseActivity;
 
 import java.util.Stack;
 
@@ -9,6 +12,7 @@ import java.util.Stack;
 public class ActivityManager {
 
     private Stack<Activity> activityStack = new Stack<>();
+    private Activity mCurrentActivity;
 
     private ActivityManager() {
     }
@@ -38,6 +42,15 @@ public class ActivityManager {
 //            activityStack.push(activity);
             activityStack.add(activity);
         }
+    }
+
+    public void setCurrentActivity(Activity currentActivity) {
+        mCurrentActivity = currentActivity;
+    }
+
+    public Activity getCurrentActivity(){
+
+        return mCurrentActivity;
     }
 
     /**

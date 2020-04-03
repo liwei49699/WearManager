@@ -1,8 +1,9 @@
-package com.yvrun.officeprocess.global;
+package com.chengzhen.wearmanager.manager;
 
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
+import android.os.Environment;
 
 import com.bumptech.glide.GlideBuilder;
 import com.bumptech.glide.annotation.GlideModule;
@@ -17,6 +18,7 @@ import java.io.File;
 public class BaseGlideModule extends AppGlideModule {
 
     private final static int cacheSize100MegaBytes = 100 * 1024 * 1024;
+    public static final String IMG_PATH = Environment.getExternalStorageDirectory().getPath() + File.separator + "pic";
 
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
@@ -29,7 +31,7 @@ public class BaseGlideModule extends AppGlideModule {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !permission) {
             builder.setDiskCache(new InternalCacheDiskCacheFactory(context, cacheSize100MegaBytes));
         } else {
-            File cacheLocation = new File(Constant.IMG_PATH);
+            File cacheLocation = new File(IMG_PATH);
             if (!cacheLocation.exists()) {
                 cacheLocation.mkdirs();
             }

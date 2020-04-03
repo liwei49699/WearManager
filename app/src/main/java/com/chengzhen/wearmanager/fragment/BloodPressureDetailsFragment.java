@@ -1,16 +1,31 @@
 package com.chengzhen.wearmanager.fragment;
 
 import android.graphics.Color;
+import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
+import com.blankj.utilcode.util.ToastUtils;
+import com.chengzhen.wearmanager.Constant;
 import com.chengzhen.wearmanager.R;
-import com.chengzhen.wearmanager.adapter.TemperatureAdapter;
+import com.chengzhen.wearmanager.adapter.BloodPressureAdapter;
 import com.chengzhen.wearmanager.base.BaseFragment;
+import com.chengzhen.wearmanager.bean.BloodPressureCharResponse;
+import com.chengzhen.wearmanager.bean.BloodPressureListResponse;
+import com.chengzhen.wearmanager.util.CodeUtils;
+import com.chengzhen.wearmanager.util.DateUtils;
+import com.chengzhen.wearmanager.util.NumUtils;
+import com.chengzhen.wearmanager.util.SignsTimeFormatter;
 import com.chengzhen.wearmanager.util.SignsValueFormatter;
+import com.chengzhen.wearmanager.util.SignsValueUtils;
+import com.chengzhen.wearmanager.view.CustomLoadMoreView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
@@ -19,73 +34,241 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.rxjava.rxlife.RxLife;
+
+import net.grandcentrix.tray.AppPreferences;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import rxhttp.wrapper.param.RxHttp;
 
-public class TemperatureDetailsFragment extends BaseFragment {
+public class BloodPressureDetailsFragment extends BaseFragment {
 
-    @BindView(R.id.chart_signs)
-    LineChart mChartSigns;
+    @BindView(R.id.refresh_form)
+    SwipeRefreshLayout mRefreshForm;
     @BindView(R.id.rv_form)
     RecyclerView mRvForm;
-    @BindView(R.id.v_line)
-    View mVline;
-    private TemperatureAdapter mTemperatureAdapter;
+    private BloodPressureAdapter mBloodPressureAdapter;
+    private String mSignsId;
+    private String mSignsNo;
+    private AppPreferences mAppPreferences;
+    private int mCurrentPage = 1;
+    private LineChart mChartSigns;
+    private SignsTimeFormatter mXSignsValueFormatter;
+    private TextView mTvHighPressureShow;
+    private TextView mTvHighPressureTimeShow;
+    private TextView mTvLowPressureShow;
+    private TextView mTvLowPressureTimeShow;
+
+    public static BloodPressureDetailsFragment getInstance(String deviceId, String deviceNo) {
+        BloodPressureDetailsFragment fragment = new BloodPressureDetailsFragment();
+        Bundle args = new Bundle();
+        args.putString(Constant.SIGNS_ID, deviceId);
+        args.putString(Constant.SIGNS_NO, deviceNo);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_temperature_details;
+        return R.layout.fragment_blood_pressure_details;
     }
 
     @Override
 
     protected void initView() {
-        initLineChart();
         initRecycleView();
+        if (getArguments() != null) {
+            mSignsId = getArguments().getString(Constant.SIGNS_ID);
+            mSignsNo = getArguments().getString(Constant.SIGNS_NO);
+        }
+        mAppPreferences = new AppPreferences(mContext);
+        mRefreshForm.setOnRefreshListener(() -> {
+
+            mCurrentPage = 1;
+            obtainHistoryChar();
+            obtainHistoryList();
+        });
     }
 
     private void initRecycleView() {
 
-        mTemperatureAdapter = new TemperatureAdapter();
+        mBloodPressureAdapter = new BloodPressureAdapter();
         mRvForm.setLayoutManager(new LinearLayoutManager(mContext));
+        mRvForm.setAdapter(mBloodPressureAdapter);
+        mBloodPressureAdapter.setLoadMoreView(new CustomLoadMoreView());
+        mBloodPressureAdapter.setOnLoadMoreListener(this::obtainHistoryList,mRvForm);
 
-        mRvForm.setAdapter(mTemperatureAdapter);
+        initHeadView();
+    }
+
+    private void initHeadView() {
+
+        View headView = LayoutInflater.from(mContext).inflate(R.layout.head_blood_pressure, mRvForm, false);
+        mBloodPressureAdapter.addHeaderView(headView);
+        mChartSigns = headView.findViewById(R.id.chart_signs);
+        mTvHighPressureShow = headView.findViewById(R.id.tv_high_pressure_show);
+        mTvHighPressureTimeShow = headView.findViewById(R.id.tv_high_pressure_time_show);
+        mTvLowPressureShow = headView.findViewById(R.id.tv_low_pressure_show);
+        mTvLowPressureTimeShow = headView.findViewById(R.id.tv_low_pressure_time_show);
+        initLineChart();
     }
 
     @Override
     protected void getData() {
 
-        setLineChartData(9,10);
-        // redraw
-        mChartSigns.invalidate();
+//        addLineChartData(new ArrayList<>(),new ArrayList<>());
 
-        List<String> stringList = new ArrayList<>(10);
-        for (int i = 0; i < 10; i++) {
-            stringList.add("");
-        }
+        //历史数据
+        obtainHistoryChar();
+        obtainHistoryList();
+    }
 
-        if(stringList.size() > 0) {
-            mVline.setVisibility(View.VISIBLE);
-        } else {
-            mVline.setVisibility(View.INVISIBLE);
-        }
-        mTemperatureAdapter.setNewData(stringList);
+    private void obtainHistoryChar() {
+
+        String token = mAppPreferences.getString(Constant.Token, "");
+        String url = Constant.URL + "/ApiStatisInfo/historyEchart";
+        RxHttp.postForm(url)
+                .addHeader("access-token",token)
+                .add("device_id",mSignsId)
+                .add("device_no",mSignsNo)
+                .add("type","XY")
+                .asObject(BloodPressureCharResponse.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(RxLife.as(this))
+                .subscribe(bloodPressureCharResponse -> {
+                    if(mRefreshForm.isRefreshing()) {
+                        mRefreshForm.setRefreshing(false);
+                    }
+
+                    boolean judgeContinue = CodeUtils.judgeContinue(bloodPressureCharResponse, mContext);
+                    if(judgeContinue) {
+
+                        int code = bloodPressureCharResponse.getCode();
+                        if(code == 0) {
+
+                            BloodPressureCharResponse.DataBean data = bloodPressureCharResponse.getData();
+                            BloodPressureCharResponse.DataBean.StandardBean standard = data.getStandard();
+                            String gy_standard = standard.getGy_standard();
+                            String dy_standard = standard.getDy_standard();
+
+                            addLimitLine(NumUtils.stringToFloat(gy_standard),Color.parseColor("#F38018"));
+                            addLimitLine(NumUtils.stringToFloat(dy_standard),Color.parseColor("#BBA387"));
+                            List<BloodPressureCharResponse.DataBean.GyBean> gy = data.getGy();
+                            List<BloodPressureCharResponse.DataBean.DyBean> dy = data.getDy();
+                            addLineChartData(gy,dy);
+                            showDetails(gy.get(gy.size() - 1),dy.get(dy.size() - 1));
+                        }
+                    }
+
+                }, throwable -> {
+                    if(mRefreshForm.isRefreshing()) {
+                        mRefreshForm.setRefreshing(false);
+                    }
+                });
+    }
+
+    private void showDetails(BloodPressureCharResponse.DataBean.GyBean gyBean, BloodPressureCharResponse.DataBean.DyBean dyBean) {
+
+        String sdataGy = gyBean.getSdata();
+        long atimeGy = gyBean.getAtime();
+        String sdataDy = dyBean.getSdata();
+        long atimeDy = dyBean.getAtime();
+
+        mTvHighPressureShow.setText(SignsValueUtils.judgeEmpty(sdataGy) + "mmHg");
+        mTvHighPressureTimeShow.setText(SignsValueUtils.judgeTime(atimeGy));
+        mTvLowPressureShow.setText(SignsValueUtils.judgeEmpty(sdataDy) + "mmHg");
+        mTvLowPressureTimeShow.setText(SignsValueUtils.judgeTime(atimeDy));
+    }
+
+    private void obtainHistoryList() {
+
+        String token = mAppPreferences.getString(Constant.Token, "");
+        String url = Constant.URL + "/ApiStatisInfo/historyList";
+        RxHttp.postForm(url)
+                .addHeader("access-token",token)
+                .add("device_id",mSignsId)
+                .add("device_no",mSignsNo)
+                .add("type","XY")
+                .add("paged",mCurrentPage)
+                .add("pageSize",10)
+                .asObject(BloodPressureListResponse.class)
+                .observeOn(AndroidSchedulers.mainThread())
+                .as(RxLife.as(this))
+                .subscribe(bloodPressureListResponse -> {
+
+                    if(mRefreshForm.isRefreshing()) {
+                        mRefreshForm.setRefreshing(false);
+                    }
+                    boolean judgeContinue = CodeUtils.judgeContinue(bloodPressureListResponse, mContext);
+                    if(judgeContinue) {
+
+                        int code = bloodPressureListResponse.getCode();
+                        if(code == 0) {
+
+                            BloodPressureListResponse.DataBeanX data = bloodPressureListResponse.getData();
+                            List<BloodPressureListResponse.DataBeanX.DataBean> dataList;
+                            int totalPage = 0;
+                            if(data != null) {
+                                List<BloodPressureListResponse.DataBeanX.DataBean> dataBeanList = data.getData();
+                                if(dataBeanList != null) {
+                                    dataList = dataBeanList;
+                                } else {
+                                    dataList = new ArrayList<>();
+                                }
+                                totalPage = data.getTotalPage();
+                            } else {
+                                dataList = new ArrayList<>();
+                            }
+
+                            if(mCurrentPage == 1) {
+                                //刷新
+                                if(totalPage <= mCurrentPage ) {
+                                    mBloodPressureAdapter.loadMoreEnd(true);
+                                    mBloodPressureAdapter.mListEnd = true;
+                                } else {
+                                    mBloodPressureAdapter.mListEnd = false;
+                                }
+                                mBloodPressureAdapter.setNewData(dataList);
+                                mCurrentPage ++;
+
+                            } else {
+                                //加载更多
+                                if(dataList.size() > 0) {
+                                    if(totalPage == mCurrentPage) {
+                                        mBloodPressureAdapter.mListEnd = true;
+                                        mBloodPressureAdapter.loadMoreEnd(true);
+                                    } else {
+                                        mBloodPressureAdapter.mListEnd = false;
+                                        mBloodPressureAdapter.loadMoreComplete();
+                                    }
+                                    mBloodPressureAdapter.addData(dataList);
+                                    mCurrentPage ++;
+                                } else {
+                                    mBloodPressureAdapter.mListEnd = true;
+                                    mBloodPressureAdapter.loadMoreEnd(true);
+                                }
+                            }
+                        }
+                    }
+                }, throwable -> {
+                    ToastUtils.showShort("访问服务器异常");
+                    if(mRefreshForm.isRefreshing()) {
+                        mRefreshForm.setRefreshing(false);
+                    }
+                });
     }
 
     private void initLineChart() {
 
-        // no description text
         mChartSigns.getDescription().setEnabled(false);
-
-        // enable touch gestures
         mChartSigns.setTouchEnabled(false);
 
-//        mChartSigns.setDragDecelerationFrictionCoef(0.9f);
-
-        // enable scaling and dragging
         mChartSigns.setDragEnabled(false);
         mChartSigns.setScaleEnabled(false);
         mChartSigns.setDrawGridBackground(false);
@@ -96,12 +279,6 @@ public class TemperatureDetailsFragment extends BaseFragment {
 
         // set an alternative background color
         mChartSigns.setBackgroundColor(Color.WHITE);
-
-        // add data
-//        seekBarX.setProgress(20);
-//        seekBarY.setProgress(30);
-
-//        chart.animateX(1500);
 
         // get the legend (only possible after setting data)
         Legend l = mChartSigns.getLegend();
@@ -117,7 +294,9 @@ public class TemperatureDetailsFragment extends BaseFragment {
         l.setOrientation(Legend.LegendOrientation.HORIZONTAL);
         l.setDrawInside(false);
 
-//        l.setYOffset(11f);
+        mChartSigns.setPinchZoom(true);
+
+        l.setYOffset(11f);
 
         XAxis xAxis = mChartSigns.getXAxis();
 //        xAxis.setTypeface(tfLight);
@@ -126,13 +305,14 @@ public class TemperatureDetailsFragment extends BaseFragment {
         xAxis.setAxisLineColor(Color.parseColor("#01A99D"));
         xAxis.setAxisLineWidth(1);
         xAxis.setTextSize(11f);
-        xAxis.setLabelCount(8);
+//        xAxis.setLabelCount(8);
         xAxis.setTextColor(Color.parseColor("#808080"));
         xAxis.setDrawGridLines(false);
 
-        SignsValueFormatter xSignsValueFormatter = new SignsValueFormatter(SignsValueFormatter.TYPE_TIME);
-        xAxis.setValueFormatter(xSignsValueFormatter);
+        mXSignsValueFormatter = new SignsTimeFormatter();
+        xAxis.setValueFormatter(mXSignsValueFormatter);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setCenterAxisLabels(true);
 
         YAxis leftAxis = mChartSigns.getAxisLeft();
 //        leftAxis.setTypeface(tfLight);
@@ -148,14 +328,17 @@ public class TemperatureDetailsFragment extends BaseFragment {
         leftAxis.setLabelCount(5);
         leftAxis.setDrawLabels(true);
 //        leftAxis.setTextColor(ColorTemplate.getHoloBlue());
-        leftAxis.setAxisMaximum(40f);
-        leftAxis.setAxisMinimum(34f);
+        leftAxis.setAxisMaximum(160f);
+        leftAxis.setAxisMinimum(69.5f);
 //        leftAxis.bo
 //        mChartSigns.setDrawBorders(false);
         leftAxis.setDrawGridLines(true);
         leftAxis.enableGridDashedLine(5f, 10f, 0f);
         leftAxis.setGridColor(Color.parseColor("#BFE3DF"));
         leftAxis.setGranularityEnabled(true);
+
+        leftAxis.setCenterAxisLabels(true);
+
 
         YAxis rightAxis = mChartSigns.getAxisRight();
 //        rightAxis.setTypeface(tfLight);
@@ -167,112 +350,76 @@ public class TemperatureDetailsFragment extends BaseFragment {
         rightAxis.setDrawZeroLine(false);
         rightAxis.setGranularityEnabled(false);
 
-        LimitLine limitLine = new LimitLine(37.2F); //得到限制线
-        limitLine.setLineWidth(1f); //宽度
-        limitLine.setTextSize(10f);
-        limitLine.setTextColor(Color.RED);  //颜色
-        limitLine.setLineColor(Color.BLUE);
-        leftAxis.addLimitLine(limitLine); //Y轴添加限制线
+        rightAxis.setCenterAxisLabels(true);
+        mChartSigns.setData(new LineData());
+        mChartSigns.invalidate();
+
     }
 
-    private void setLineChartData(int count, float range) {
+    private void addLimitLine(float limit,int color){
 
-//        ArrayList<Entry> values1 = new ArrayList<>();
+        LimitLine limitLine = new LimitLine(limit); //得到限制线
+        limitLine.setLineWidth(1f); //宽度
+        limitLine.setLineColor(color);
+        mChartSigns.getAxisLeft().addLimitLine(limitLine); //Y轴添加限制线
+    }
 
-//        for (int i = 0; i < count; i++) {
-//            float val = (float) (Math.random() * (range / 2f)) + 50;
-//            values1.add(new Entry(i, val));
-//        }
+    private void addLineChartData(List<BloodPressureCharResponse.DataBean.GyBean> gyBeans, List<BloodPressureCharResponse.DataBean.DyBean> dyBeans) {
 
-//        ArrayList<Entry> values2 = new ArrayList<>();
-//
-//        for (int i = 0; i < count; i++) {
-//            float val = (float) (Math.random() * range) + 450;
-//            values2.add(new Entry(i, val));
-//        }
-//
-        ArrayList<Entry> values3 = new ArrayList<>();
+        ArrayList<Entry> valuesGy = new ArrayList<>();
+        ArrayList<Entry> valuesDy = new ArrayList<>();
 
-        for (int i = 0; i < count; i++) {
-            float val = (float) (Math.random() * range) + 500;
-            values3.add(new Entry(i + 10,   34 + i));
+        List<Long> longList = new ArrayList<>();
+        for (int i = 0; i < gyBeans.size(); i++) {
+            longList.add(gyBeans.get(i).getAtime());
         }
 
-        LineDataSet /*set1, set2, */set3;
+        mXSignsValueFormatter.setLongList(longList);
+
+        for (int i = 0; i < gyBeans.size(); i++) {
+            valuesGy.add(new Entry(i,NumUtils.stringToFloat(gyBeans.get(i).getSdata())));
+        }
+        for (int i = 0; i < dyBeans.size(); i++) {
+            valuesDy.add(new Entry(i,NumUtils.stringToFloat(dyBeans.get(i).getSdata())));
+        }
+
+        LineDataSet setGy, setDy;
 
         if (mChartSigns.getData() != null &&
                 mChartSigns.getData().getDataSetCount() > 0) {
-//            set1 = (LineDataSet) mChartSigns.getData().getDataSetByIndex(0);
-//            set2 = (LineDataSet) mChartSigns.getData().getDataSetByIndex(1);
-            set3 = (LineDataSet) mChartSigns.getData().getDataSetByIndex(0);
-//            set1.setValues(values1);
-//            set2.setValues(values2);
-            set3.setValues(values3);
+            setGy = (LineDataSet) mChartSigns.getData().getDataSetByIndex(0);
+            setDy = (LineDataSet) mChartSigns.getData().getDataSetByIndex(1);
+            setGy.setValues(valuesGy);
+            setDy.setValues(valuesDy);
             mChartSigns.getData().notifyDataChanged();
             mChartSigns.notifyDataSetChanged();
         } else {
-            // create a dataset and give it a type
-//            set1 = new LineDataSet(values1, "DataSet 1");
-//
-//            set1.setAxisDependency(YAxis.AxisDependency.LEFT);
-//            set1.setColor(ColorTemplate.getHoloBlue());
-//            set1.setCircleColor(Color.WHITE);
-//            set1.setLineWidth(2f);
-//            set1.setCircleRadius(3f);
-//            set1.setFillAlpha(65);
-//            set1.setFillColor(ColorTemplate.getHoloBlue());
-//            set1.setHighLightColor(Color.rgb(244, 117, 117));
-//            set1.setDrawCircleHole(false);
 
-            //set1.setFillFormatter(new MyFillFormatter(0f));
-            //set1.setDrawHorizontalHighlightIndicator(false);
-            //set1.setVisible(false);
-            //set1.setCircleHoleColor(Color.WHITE);
-
-            // create a dataset and give it a type
-//            set2 = new LineDataSet(values2, "DataSet 2");
-//            set2.setAxisDependency(YAxis.AxisDependency.RIGHT);
-//            set2.setColor(Color.RED);
-//            set2.setCircleColor(Color.WHITE);
-//            set2.setLineWidth(2f);
-//            set2.setCircleRadius(3f);
-//            set2.setFillAlpha(65);
-//            set2.setFillColor(Color.RED);
-//            set2.setDrawCircleHole(false);
-//            set2.setHighLightColor(Color.rgb(244, 117, 117));
-            //set2.setFillFormatter(new MyFillFormatter(900f));
-
-            set3 = new LineDataSet(values3, "DataSet 3");
-            set3.setAxisDependency(YAxis.AxisDependency.LEFT);
-            set3.setColor(Color.RED);
-            set3.setCircleColor(Color.WHITE);
-            set3.setLineWidth(2f);
-            set3.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
-//            set3.setCircleRadius(3f);
-//            set3.setFillAlpha(65);
-//            set3.setFillColor(ColorTemplate.colorWithAlpha(Color.YELLOW, 200));
-//            set3.setDrawCircleHole(false);
-
-//            set3.setHighLightColor(Color.rgb(244, 117, 117));
-
+            setGy = new LineDataSet(valuesGy, "DataSet_gy");
+            setGy.setAxisDependency(YAxis.AxisDependency.LEFT);
+            setGy.setColor(Color.parseColor("#E5001D"));
+            setGy.setCircleColor(Color.parseColor("#E5001D"));
+            setGy.setLineWidth(2f);
+            setGy.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
             //隐藏节点值
-            set3.setDrawValues(false);
+            setGy.setDrawValues(longList.size() == 1);
             //隐藏节点圆点
-            set3.setDrawCircles(false);
+            setGy.setDrawCircles(longList.size() == 1);
 
-            // create a data object with the data sets
-            LineData data = new LineData(set3);
-//            data.setValueTextColor(Color.WHITE);
-//            data.setValueTextSize(9f);
-
+            setDy = new LineDataSet(valuesDy, "DataSet_dy");
+            setDy.setAxisDependency(YAxis.AxisDependency.LEFT);
+            setDy.setColor(Color.parseColor("#15998B"));
+            setDy.setCircleColor(Color.parseColor("#15998B"));
+            setDy.setLineWidth(2f);
+            setDy.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
+            //隐藏节点值
+            setDy.setDrawValues(longList.size() == 1);
+            //隐藏节点圆点
+            setDy.setDrawCircles(longList.size() == 1);
+            LineData data = new LineData(setGy,setDy);
             // set data
             mChartSigns.setData(data);
-
-            List<Entry> values = set3.getValues();
-            for (Entry value : values) {
-
-                Log.d("--TAG--", "setLineChartData: " + value.getX() + "=====" + value.getY());
-            }
         }
+        mChartSigns.invalidate();
     }
 }

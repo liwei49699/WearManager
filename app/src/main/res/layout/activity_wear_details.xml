@@ -1,9 +1,227 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.WearDetailsActivity">
+    android:background="@color/color_F1F1F1"
+    tools:context=".activity.WearDetailsActivity"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <RelativeLayout
+        android:id="@+id/rl_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:layout_marginTop="10dp"
+        android:padding="10dp">
+
+        <com.ruffian.library.widget.RImageView
+            android:id="@+id/iv_photo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:icon_src_normal="@drawable/ic_default_head"
+            app:corner_radius="5dp"
+            android:scaleType="centerCrop"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="30dp"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="李军"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:layout_toRightOf="@+id/iv_photo"
+            android:textColor="@color/color_333333"/>
+
+        <TextView
+            android:id="@+id/tv_power"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="电量：50%"
+            android:textSize="15sp"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/iv_photo"
+            android:textColor="@color/color_666666"/>
+
+        <TextView
+            android:id="@+id/tv_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="时间：10-11 12：13"
+            android:textSize="15sp"
+            android:layout_below="@+id/tv_power"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@+id/iv_photo"
+            android:textColor="@color/color_666666"/>
+
+        <TextView
+            android:id="@+id/tv_address_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="地址："
+            android:layout_marginTop="5dp"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:layout_below="@+id/tv_time"
+            android:visibility="visible"
+            android:layout_toRightOf="@+id/iv_photo"/>
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="南京市玄武区环园大道南京市玄武区环园大道南京市玄武区环园大道"
+            android:layout_marginTop="5dp"
+            android:textSize="15sp"
+            android:layout_below="@+id/tv_time"
+            android:visibility="visible"
+            android:layout_toRightOf="@+id/tv_address_sign"/>
+
+        <TextView
+            android:id="@+id/tv_wear_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="手表号码:18571658038"
+            android:layout_marginTop="5dp"
+            android:textSize="15sp"
+            android:singleLine="true"
+            android:layout_marginBottom="10dp"
+            android:layout_below="@+id/tv_address"
+            android:visibility="visible"
+            android:layout_toRightOf="@+id/iv_photo"/>
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:background="@color/color_F1F1F1"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingStart="20dp"
+        android:background="@color/white"
+        android:paddingEnd="20dp"
+        android:layout_height="55dp">
+
+        <TextView
+            android:id="@+id/tv_sos_number1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SOS号码1:"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/et_sos_number1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_sos_number1"
+            android:layout_centerVertical="true"
+            android:enabled="false"
+            android:background="@null"
+            android:textColor="@color/tv_content"
+            android:inputType="phone"
+            android:paddingStart="20dp"
+            android:maxLines="1"
+            android:gravity="end"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layerType="software"
+            android:layout_toRightOf="@+id/tv_sos_number1"
+            android:layout_below="@+id/et_sos_number1"
+            android:layout_marginTop="5dp"
+            android:background="@color/color_line"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:background="@color/white"
+        android:layout_height="55dp">
+
+        <TextView
+            android:id="@+id/tv_sos_number2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SOS号码2:"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/et_sos_number2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_sos_number2"
+            android:layout_centerVertical="true"
+            android:enabled="false"
+            android:background="@null"
+            android:textColor="@color/tv_content"
+            android:inputType="phone"
+            android:paddingStart="20dp"
+            android:maxLines="1"
+            android:gravity="end"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layerType="software"
+            android:layout_toRightOf="@+id/tv_sos_number2"
+            android:layout_below="@+id/et_sos_number2"
+            android:layout_marginTop="5dp"
+            android:background="@color/color_line"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:background="@color/white"
+        android:layout_height="55dp">
+
+        <TextView
+            android:id="@+id/tv_sos_number3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SOS号码3:"
+            android:textSize="16sp"
+            android:layout_centerVertical="true"/>
+
+        <EditText
+            android:id="@+id/et_sos_number3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/tv_sos_number3"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:paddingStart="20dp"
+            android:textColor="@color/tv_content"
+            android:maxLines="1"
+            android:enabled="false"
+            android:inputType="phone"
+            android:gravity="end"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layerType="software"
+            android:layout_toRightOf="@+id/tv_sos_number3"
+            android:layout_below="@+id/et_sos_number3"
+            android:layout_marginTop="5dp"
+            android:background="@color/color_line"/>
+    </RelativeLayout>
+
+</LinearLayout>

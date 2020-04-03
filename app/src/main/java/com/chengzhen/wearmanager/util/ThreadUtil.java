@@ -1,4 +1,4 @@
-package com.amap.map3d.demo.util;
+package com.chengzhen.wearmanager.util;
 
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ExecutorService;
@@ -10,7 +10,6 @@ public class ThreadUtil {
 
     private BlockingQueue<Runnable> taskQueue = new LinkedBlockingQueue<Runnable>();
     private ExecutorService executorService = null;
-
 
     private volatile static ThreadUtil instance;
 
@@ -25,7 +24,6 @@ public class ThreadUtil {
         return instance;
     }
 
-
     public static void destroy() {
         if(instance != null) {
             instance.executorService.shutdownNow();
@@ -34,12 +32,11 @@ public class ThreadUtil {
         }
     }
 
-    private  ThreadUtil() {
+    private ThreadUtil() {
 
         int NUMBER_OF_CORES = Runtime.getRuntime().availableProcessors();
         int KEEP_ALIVE_TIME = 1;
         TimeUnit KEEP_ALIVE_TIME_UNIT = TimeUnit.SECONDS;
-
 
         executorService = new ThreadPoolExecutor(NUMBER_OF_CORES,
                 NUMBER_OF_CORES*2,
@@ -49,13 +46,9 @@ public class ThreadUtil {
                 new ThreadPoolExecutor.AbortPolicy());
     }
 
-
     public void execute(Runnable command) {
         if(executorService != null) {
             executorService.execute(command);
         }
     }
-
-
-
 }

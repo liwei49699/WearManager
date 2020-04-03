@@ -1,4 +1,4 @@
-package com.chengzhen.wearmanager;
+package com.chengzhen.wearmanager.adapter;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

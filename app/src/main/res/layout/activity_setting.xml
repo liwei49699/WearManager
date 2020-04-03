@@ -4,9 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/space"
+    android:background="@color/color_F1F1F1"
     android:orientation="vertical"
-    tools:context=".SettingActivity">
+    tools:context=".activity.SettingActivity">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_F1F1F1"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -17,7 +22,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="电量报警"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/tv_content"
             android:textSize="16sp"
             android:paddingLeft="20dp"
             android:layout_centerVertical="true"/>
@@ -25,7 +30,7 @@
         <ImageView
             android:id="@+id/iv_power_alarm"
             android:layout_width="50dp"
-            android:layout_height="25dp"
+            android:layout_height="22dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:visibility="visible"
@@ -37,7 +42,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/space"
+        android:background="@color/color_line"
         android:layout_marginLeft="15dp"/>
 
     <RelativeLayout
@@ -49,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="位置报警"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/tv_content"
             android:textSize="16sp"
             android:paddingLeft="20dp"
             android:layout_centerVertical="true"/>
@@ -57,7 +62,7 @@
         <ImageView
             android:id="@+id/iv_location_alarm"
             android:layout_width="50dp"
-            android:layout_height="25dp"
+            android:layout_height="22dp"
             android:scaleType="centerCrop"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
@@ -69,7 +74,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/space"
+        android:background="@color/color_line"
         android:layout_marginLeft="15dp"/>
 
     <RelativeLayout
@@ -81,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="呼叫报警"
-            android:textColor="@color/color_333333"
+            android:textColor="@color/tv_content"
             android:textSize="16sp"
             android:paddingLeft="20dp"
             android:layout_centerVertical="true"/>
@@ -89,7 +94,7 @@
         <ImageView
             android:id="@+id/iv_call_alarm"
             android:layout_width="50dp"
-            android:layout_height="25dp"
+            android:layout_height="22dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:scaleType="centerCrop"

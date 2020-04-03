@@ -3,11 +3,31 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MapFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".fragment.MapFragment">
 
     <FrameLayout
         android:id="@+id/fl_alarm"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <com.ruffian.library.widget.RRelativeLayout
+        android:id="@+id/rl_map_refresh"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="30dp"
+        android:elevation="10dp"
+        app:background_normal="@color/colorPrimary"
+        app:corner_radius="20dp">
+        <com.ruffian.library.widget.RImageView
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            app:is_circle="true"
+            android:layout_centerInParent="true"
+            app:icon_src_normal="@drawable/ic_map_refresh"/>
+    </com.ruffian.library.widget.RRelativeLayout>
+
 
 </RelativeLayout>

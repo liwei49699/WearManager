@@ -29,6 +29,7 @@ import net.grandcentrix.tray.AppPreferences;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -37,7 +38,7 @@ import rxhttp.wrapper.param.RxHttp;
 
 import static android.util.TypedValue.COMPLEX_UNIT_DIP;
 
-public class HandleAlarmFragment extends BaseFragment {
+public class OtherAlarmFragment extends BaseFragment {
 
     @BindView(R.id.rv_alarm)
     RecyclerView mRvAlarm;
@@ -52,7 +53,7 @@ public class HandleAlarmFragment extends BaseFragment {
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_handle_alarm;
+        return R.layout.fragment_other_alarm;
     }
 
     @Override
@@ -103,6 +104,7 @@ public class HandleAlarmFragment extends BaseFragment {
         obtainAlarmList();
 
         mEmptyView = getLayoutInflater().inflate(R.layout.empty_list, mRvAlarm, false);
+//        mAlarmListAdapter.setEmptyView(mEmptyView);
     }
 
     private void showHandleDialog(long id, int position) {
@@ -166,6 +168,7 @@ public class HandleAlarmFragment extends BaseFragment {
                 .add("paged",mCurrentPage)
                 .add("pageSize",20)
                 .add("status","")
+                .add("type","2")
                 .asObject(AlarmListBean.class)
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(RxLife.as(this))
@@ -181,27 +184,34 @@ public class HandleAlarmFragment extends BaseFragment {
                         if(code == 0) {
 
                             AlarmListBean.DataBeanX data = deviceListResponse.getData();
-                            List<AlarmListBean.DataBeanX.DataBean> dataList = null;
+                            List<AlarmListBean.DataBeanX.DataBean> dataList;
                             int totalPage = 0;
                             if(data != null) {
-                                dataList = data.getData();
+                                List<AlarmListBean.DataBeanX.DataBean> dataBeanList = data.getData();
+                                if(dataBeanList != null) {
+                                    dataList = dataBeanList;
+                                } else {
+                                    dataList = new ArrayList<>();
+                                }
                                 totalPage = data.getTotalPage();
+                            } else {
+                                dataList = new ArrayList<>();
                             }
 
                             if(mCurrentPage == 1) {
                                 //刷新
                                 mAlarmListAdapter.setNewData(dataList);
-                                if(dataList == null || dataList.size() == 0) {
+                                if(dataList.size() == 0) {
                                     mAlarmListAdapter.setEmptyView(mEmptyView);
                                 }
-                                if(totalPage == mCurrentPage) {
+                                if(totalPage <= mCurrentPage) {
                                     mAlarmListAdapter.loadMoreEnd(true);
+                                } else {
+                                    mCurrentPage ++;
                                 }
-                                mCurrentPage ++;
-
                             } else {
                                 //加载更多
-                                if(dataList != null && dataList.size() > 0) {
+                                if(dataList.size() > 0) {
                                     mAlarmListAdapter.addData(dataList);
                                     if(totalPage == mCurrentPage) {
                                         mAlarmListAdapter.loadMoreEnd(true);

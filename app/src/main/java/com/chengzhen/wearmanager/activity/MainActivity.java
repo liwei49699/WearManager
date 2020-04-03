@@ -1,16 +1,28 @@
-package com.chengzhen.wearmanager;
+package com.chengzhen.wearmanager.activity;
 
 import android.Manifest;
 import android.content.Context;
-import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.ToastUtils;
-import com.chengzhen.wearmanager.bean.DeviceListEvent;
-import com.chengzhen.wearmanager.bean.DeviceListResponse;
+import com.chengzhen.wearmanager.Constant;
+import com.chengzhen.wearmanager.adapter.MainBottomPagerAdapter;
+import com.chengzhen.wearmanager.bean.DevicePageListResponse;
+import com.chengzhen.wearmanager.fragment.AlarmListFragment;
+import com.chengzhen.wearmanager.fragment.MapFragment;
+import com.chengzhen.wearmanager.fragment.MineFragment;
+import com.chengzhen.wearmanager.R;
+import com.chengzhen.wearmanager.fragment.SignsFragment;
+import com.chengzhen.wearmanager.manager.ActivityManager;
+import com.chengzhen.wearmanager.view.ScrollViewPager;
+import com.chengzhen.wearmanager.fragment.WearListFragment;
+import com.chengzhen.wearmanager.base.BaseActivity;
+import com.chengzhen.wearmanager.event.DeviceListEvent;
 import com.chengzhen.wearmanager.util.CodeUtils;
 import com.gyf.immersionbar.ImmersionBar;
 import com.rxjava.rxlife.RxLife;
@@ -27,12 +39,17 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.Common
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import me.jessyan.autosize.AutoSizeCompat;
 import rxhttp.wrapper.param.RxHttp;
 
 public class MainActivity extends BaseActivity {
@@ -41,6 +58,12 @@ public class MainActivity extends BaseActivity {
     MagicIndicator mMiBottomNav;
     @BindView(R.id.vp_main)
     ScrollViewPager mVpMain;
+    @BindView(R.id.rl_bottom_center)
+    RelativeLayout mRlBottomCenter;
+    @BindView(R.id.title_img)
+    ImageView mTitleImg;
+    @BindView(R.id.title_text)
+    TextView mTitleText;
     /**
      * 需要进行检测的权限数组
      */
@@ -51,12 +74,13 @@ public class MainActivity extends BaseActivity {
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE};
 
-    private String[] mTitles = {"地图", "终端", "我的"};
-    private int[] mSelectIcons = {R.drawable.ic_map_select
-            ,R.drawable.ic_device_select,R.drawable.ic_mine_select};
-    private int[] mNormalIcons = {R.drawable.ic_map_normal
-            ,R.drawable.ic_device_normal,R.drawable.ic_mine_normal};
+    private String[] mTitles = {"地图", "终端","报警", "体征","我的"};
+    private int[] mSelectIcons = {R.drawable.ic_map_select,R.drawable.ic_device_select
+            ,R.drawable.ic_alarm_select,R.drawable.ic_signs_select,R.drawable.ic_mine_select};
+    private int[] mNormalIcons = {R.drawable.ic_map_normal,R.drawable.ic_device_normal
+            ,R.drawable.ic_alarm_normal,R.drawable.ic_signs_normal,R.drawable.ic_mine_normal};
     private AppPreferences mAppPreferences;
+    private Disposable mDisposable;
 
     @Override
     protected int getLayoutID() {
@@ -79,15 +103,36 @@ public class MainActivity extends BaseActivity {
         initViewpager();
         initIndicator();
 //        obtainDeviceList();
+
+        setTimerTask();
     }
 
-    public void obtainDeviceList() {
+    private void setTimerTask() {
+
+        mDisposable = Observable.interval(0, 1, TimeUnit.MINUTES)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aLong -> obtainDeviceList(false));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        if(mDisposable != null && !mDisposable.isDisposed()) {
+            mDisposable.dispose();
+        }
+    }
+
+    public void obtainDeviceList(boolean refresh) {
 
         String token = mAppPreferences.getString(Constant.Token, "");
-        String url = "http://61.155.106.23:8080/lpro-lgb/service/api/ApiDeviceInfo/deviceList";
+        String url = Constant.URL + "/ApiDeviceInfo/devicePageList";
         RxHttp.postForm(url)
                 .addHeader("access-token",token)
-                .asObject(DeviceListResponse.class)
+                .add("paged",1)
+                .add("pageSize",100)
+                .asObject(DevicePageListResponse.class)
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(RxLife.as(this))
                 .subscribe(deviceListResponse -> {
@@ -97,25 +142,36 @@ public class MainActivity extends BaseActivity {
 
                         DeviceListEvent deviceListEvent = new DeviceListEvent();
                         int code = deviceListResponse.getCode();
-                        if(code == 0) {
-                            deviceListEvent.success = true;
+                        deviceListEvent.success = code == 0;
+                        deviceListEvent.refresh = refresh;
+                        DevicePageListResponse.DataBeanX data = deviceListResponse.getData();
+                        List<DevicePageListResponse.DataBeanX.DataBean> dataList = null;
+                        if(data != null) {
+                            List<DevicePageListResponse.DataBeanX.DataBean> dataBeanList = data.getData();
+                            if(dataBeanList != null) {
+                                dataList = dataBeanList;
+                            } else {
+                                dataList = new ArrayList<>();
+                            }
                         } else {
-                            deviceListEvent.success = false;
+                            dataList = new ArrayList<>();
                         }
-                        List<DeviceListResponse.DataBean> data = deviceListResponse.getData();
-                        deviceListEvent.data = data;
+                        deviceListEvent.data = dataList;
                         EventBus.getDefault().post(deviceListEvent);
                     }
-                }, throwable -> ToastUtils.showShort("访问服务器异常"));
+                }, throwable -> {
+
+                    DeviceListEvent deviceListEvent = new DeviceListEvent();
+                    deviceListEvent.success = false;
+                    EventBus.getDefault().post(deviceListEvent);
+                    ToastUtils.showShort("访问服务器异常");
+                });
     }
 
     private void checkPermissions() {
 
         RxPermissions rxPermissions = new RxPermissions(this);
-        Disposable subscribe = rxPermissions.request(needPermissions).subscribe(new Consumer<Boolean>() {
-            @Override
-            public void accept(Boolean aBoolean) throws Exception {
-            }
+        Disposable subscribe = rxPermissions.request(needPermissions).subscribe(aBoolean -> {
         });
     }
 
@@ -124,9 +180,11 @@ public class MainActivity extends BaseActivity {
         MainBottomPagerAdapter mainBottomPagerAdapter = new MainBottomPagerAdapter(getSupportFragmentManager());
         MapFragment mapFragment = new MapFragment();
         WearListFragment wearListFragment = new WearListFragment();
+        AlarmListFragment alarmListFragment = new AlarmListFragment();
+        SignsFragment signsFragment = new SignsFragment();
         MineFragment mineFragment = new MineFragment();
-        mainBottomPagerAdapter.setFragmentList(mapFragment,wearListFragment,mineFragment);
-        mVpMain.setOffscreenPageLimit(3);
+        mainBottomPagerAdapter.setFragmentList(mapFragment,wearListFragment,alarmListFragment,signsFragment,mineFragment);
+        mVpMain.setOffscreenPageLimit(4);
         mVpMain.setAdapter(mainBottomPagerAdapter);
     }
 
@@ -151,6 +209,10 @@ public class MainActivity extends BaseActivity {
                 titleText.setText(mTitles[index]);
                 commonPagerTitleView.setContentView(customLayout);
 
+                if(index == 2) {
+                    titleImg.setVisibility(View.INVISIBLE);
+                }
+
                 commonPagerTitleView.setOnPagerTitleChangeListener(new CommonPagerTitleView.OnPagerTitleChangeListener() {
 
                     @Override
@@ -158,12 +220,21 @@ public class MainActivity extends BaseActivity {
                         titleText.setTextColor(getResources().getColor(R.color.colorPrimary));
                         titleImg.setImageResource(mSelectIcons[index]);
 
+                        if(index == 2) {
+                            mTitleText.setTextColor(getResources().getColor(R.color.colorPrimary));
+                            mTitleImg.setImageResource(mSelectIcons[index]);
+                        }
+
                     }
 
                     @Override
                     public void onDeselected(int index, int totalCount) {
                         titleText.setTextColor(getResources().getColor(R.color.color_B1B1B1));
                         titleImg.setImageResource(mNormalIcons[index]);
+                        if(index == 2) {
+                            mTitleText.setTextColor(getResources().getColor(R.color.color_B1B1B1));
+                            mTitleImg.setImageResource(mNormalIcons[index]);
+                        }
                     }
 
                     @Override
@@ -198,11 +269,38 @@ public class MainActivity extends BaseActivity {
         });
         mMiBottomNav.setNavigator(commonNavigator);
         ViewPagerHelper.bind(mMiBottomNav, mVpMain);
+
+        mRlBottomCenter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                mVpMain.setCurrentItem(2);
+            }
+        });
     }
 
     @Override
-    public void onBackPressed() {
-        moveTaskToBack(true);
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
+            if (event.getAction() == KeyEvent.ACTION_DOWN && event.getRepeatCount() == 0) {
+                exit();
+                return true;
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private long exitTime = 0;
+
+    private void exit() {
+        if ((System.currentTimeMillis() - exitTime) > 2000) {
+            ToastUtils.showShort("再按一次退出程序");
+            exitTime = System.currentTimeMillis();
+        } else {
+            // 结束Activity从堆栈中移除
+            ActivityManager.getInstance().exitApp();
+        }
     }
 
     @Override

@@ -1,9 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.SetWorkPhoneActivity">
+    tools:context=".activity.SetWorkPhoneActivity"
+    android:background="@color/white"
+    android:orientation="vertical">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/color_F1F1F1"/>
+
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_logo"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_gravity="center_vertical"
+            android:background="#B8B9BC"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="输入号码"
+            android:textStyle="bold"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:textSize="20sp"
+            android:textColor="#B8B9BC"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="#B8B9BC"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"/>
+
+    </LinearLayout>
+
+    <com.ruffian.library.widget.RRelativeLayout
+        android:id="@+id/rrl_set_work_phone"
+        android:layout_width="320dp"
+        android:layout_height="50dp"
+        app:border_width_normal="1dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        app:corner_radius="5dp"
+        android:gravity="center_vertical"
+        app:border_color_normal="@color/color_CBCBCB">
+
+        <ImageView
+            android:id="@+id/tv_sign_password"
+            android:layout_width="5dp"
+            android:layout_height="25dp"
+            android:layout_marginRight="5dp"
+            android:visibility="invisible"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_new_password"
+            android:layout_marginLeft="10dp"/>
+
+        <EditText
+            android:id="@+id/et_set_work_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@null"
+            android:hint="请输入值班号码"
+            android:textSize="16sp"
+            android:maxLength="11"
+            android:maxLines="1"
+            android:layout_centerVertical="true"
+            android:inputType="phone"
+            android:textColor="@color/color_939393"
+            android:layout_toRightOf="@+id/tv_sign_password"
+            android:layout_marginRight="20dp"/>
+
+    </com.ruffian.library.widget.RRelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_confirm"
+        android:layout_width="320dp"
+        android:layout_height="45dp"
+        android:text="确    认"
+        android:textSize="20sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:layout_below="@+id/rrl_set_work_phone"
+        android:textColor="@color/white"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/ic_bg_login"
+        android:layout_marginTop="30dp"/>
+
+</LinearLayout>

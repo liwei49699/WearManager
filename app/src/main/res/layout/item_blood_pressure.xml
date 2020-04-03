@@ -8,7 +8,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <TextView
+            android:id="@+id/tv_measure_time"
             android:layout_width="0dp"
             android:layout_height="40dp"
             android:text="3/08 12:25:03"
@@ -17,20 +19,22 @@
             android:textSize="14sp"
             android:textColor="@color/color_666666"/>
 
-        <!--            <TextView-->
-        <!--                android:layout_width="0dp"-->
-        <!--                android:layout_height="40dp"-->
-        <!--                android:text="高压/舒张压"-->
-        <!--                android:layout_weight="1"-->
-        <!--                android:gravity="center"-->
-        <!--                android:textColor="@color/white"-->
-        <!--                android:textStyle="bold"-->
-        <!--                android:background="@color/color_green_light"/>-->
-
         <TextView
+            android:id="@+id/tv_high_pressure_show"
             android:layout_width="0dp"
             android:layout_height="40dp"
-            android:text="37.3°C"
+            android:text="163mmHg"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textColor="@color/color_green_dark"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:id="@+id/tv_low_pressure_show"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:text="---mmHg"
+            android:textSize="14sp"
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/color_green_dark"/>
@@ -42,4 +46,10 @@
         android:layout_height="1.5dp"
         android:alpha="0.3"
         android:background="@drawable/bg_dash_line"/>
+
+    <View
+        android:id="@+id/v_line_end"
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/color_green_dark"/>
 </LinearLayout>

@@ -1,6 +1,426 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="10dp"
+    android:background="@color/white"
+    android:paddingBottom="10dp">
 
-</LinearLayout>
+    <RelativeLayout
+        android:id="@+id/rl_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp">
+
+        <com.ruffian.library.widget.RImageView
+            android:id="@+id/riv_head"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:is_circle="true"
+            app:icon_src_normal="@drawable/ic_head_default_signs"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="李军"
+            android:textSize="18sp"
+            android:maxLength="3"
+            android:textStyle="bold"
+            android:layout_below="@+id/riv_head"
+            android:layout_marginTop="3dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/color_333333"/>
+
+        <TextView
+            android:id="@+id/tv_temperature"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="----℃"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="2dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/color_green_dark"/>
+
+        <TextView
+            android:id="@+id/tv_view_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="查看更多>>"
+            android:textSize="11sp"
+            android:layout_below="@+id/tv_temperature"
+            android:layout_marginTop="5dp"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/color_333333"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/rl_left"
+        android:layout_marginEnd="10dp"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_blood_sugar_sign"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:text="血糖"
+                android:layout_marginEnd="7dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/color_green_light"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_green_dark"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_green_dark"
+                android:layout_alignBottom="@+id/tv_blood_sugar_sign"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_toEndOf="@+id/tv_blood_sugar_sign">
+
+                <com.ruffian.library.widget.RTextView
+                    android:id="@+id/tv_meal_before"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="餐前"
+                    app:corner_radius="5dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="9sp"
+                    android:textColor="@color/white"
+                    app:background_normal="@color/color_green_dark"/>
+
+                <TextView
+                    android:id="@+id/tv_meal_before_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/tv_meal_before"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="2dp"
+                    android:textColor="@color/color_green_dark"
+                    android:text="163mmol/L"/>
+
+                <TextView
+                    android:id="@+id/tv_meal_before_time_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:text="3/08 12:25:03"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_marginTop="22dp"
+                android:alpha="0.3"
+                android:layout_toEndOf="@+id/tv_blood_sugar_sign"
+                android:background="@drawable/bg_dash_line"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_marginTop="22dp"
+                android:layout_toEndOf="@+id/tv_blood_sugar_sign">
+
+                <com.ruffian.library.widget.RTextView
+                    android:id="@+id/tv_meal_after"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="餐后"
+                    app:corner_radius="5dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="9sp"
+                    android:textColor="@color/white"
+                    app:background_normal="@color/color_green_dark"/>
+
+                <TextView
+                    android:id="@+id/tv_meal_after_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/tv_meal_after"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="2dp"
+                    android:textColor="@color/color_green_dark"
+                    android:text="163mmol/L"/>
+
+                <TextView
+                    android:id="@+id/tv_meal_after_time_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:text="3/08 12:25:03"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/tv_blood_pressure_sign"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:text="血压"
+                android:layout_marginEnd="7dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/color_green_light"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_green_dark"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_green_dark"
+                android:layout_alignBottom="@+id/tv_blood_pressure_sign"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_toEndOf="@+id/tv_blood_pressure_sign">
+
+                <com.ruffian.library.widget.RTextView
+                    android:id="@+id/tv_meal_before2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="高压"
+                    app:corner_radius="5dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="9sp"
+                    android:textColor="@color/white"
+                    app:background_normal="@color/color_green_dark"/>
+
+                <TextView
+                    android:id="@+id/tv_high_pressure_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/tv_meal_before2"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="2dp"
+                    android:textColor="@color/color_green_dark"
+                    android:text="----mmHg"/>
+
+                <TextView
+                    android:id="@+id/tv_high_pressure_time_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:text="3/08 12:25:03"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1.5dp"
+                android:layout_marginTop="22dp"
+                android:alpha="0.3"
+                android:layout_toEndOf="@+id/tv_blood_pressure_sign"
+                android:background="@drawable/bg_dash_line"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_marginTop="22dp"
+                android:layout_toEndOf="@+id/tv_blood_pressure_sign">
+
+                <com.ruffian.library.widget.RTextView
+                    android:id="@+id/tv_meal_after2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="低压"
+                    app:corner_radius="5dp"
+                    android:paddingStart="4dp"
+                    android:paddingEnd="4dp"
+                    android:paddingTop="1dp"
+                    android:paddingBottom="1dp"
+                    android:layout_centerVertical="true"
+                    android:textSize="9sp"
+                    android:textColor="@color/white"
+                    app:background_normal="@color/color_green_dark"/>
+
+                <TextView
+                    android:id="@+id/tv_low_pressure_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toEndOf="@+id/tv_meal_after2"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:textColor="@color/color_green_dark"
+                    android:text="----mmHg"/>
+
+                <TextView
+                    android:id="@+id/tv_low_pressure_time_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:text="3/08 12:25:03"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/tv_heart_rate_sign"
+                android:layout_width="45dp"
+                android:layout_height="25dp"
+                android:text="心率"
+                android:layout_marginEnd="7dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/color_green_light"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_green_dark"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_green_dark"
+                android:layout_alignBottom="@+id/tv_heart_rate_sign"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/tv_heart_rate_sign">
+
+                <TextView
+                    android:id="@+id/tv_heart_rate_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:textColor="@color/color_green_dark"
+                    android:text="----bmp"/>
+
+                <TextView
+                    android:id="@+id/tv_heart_rate_time_show"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:text="3/08 12:25:03"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="7dp">
+
+            <TextView
+                android:id="@+id/tv_blood_oxygen_sign"
+                android:layout_width="45dp"
+                android:layout_height="25dp"
+                android:text="血氧"
+                android:layout_marginEnd="7dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/color_green_light"
+                android:gravity="center"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_green_dark"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:background="@color/color_green_dark"
+                android:layout_alignBottom="@+id/tv_blood_oxygen_sign"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="22dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@+id/tv_blood_oxygen_sign">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="3dp"
+                    android:textColor="@color/color_green_dark"
+                    android:text="----%"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="11sp"
+                    android:text="----"
+                    android:layout_alignParentEnd="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+</RelativeLayout>

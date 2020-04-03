@@ -1,9 +1,424 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.AddWearActivity">
+    android:background="@color/color_F1F1F1"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_F1F1F1"
+        android:layout_marginTop="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/white">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingStart="20dp"
+                android:visibility="gone"
+                android:paddingEnd="15dp">
+
+                <TextView
+                    android:id="@+id/tv_device_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设 备 名 称 :"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:id="@+id/et_device_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:hint="请输入设备名称"
+                    android:paddingEnd="10dp"
+                    android:layout_toRightOf="@+id/tv_device_name"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:textColor="@color/tv_content"
+                    android:maxLines="1"
+                    android:paddingStart="20dp"
+                    android:gravity="end"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layerType="software"
+                    android:layout_toRightOf="@+id/tv_device_name"
+                    android:layout_below="@+id/et_device_name"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/color_line"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="15dp"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/tv_device_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设 备 编 号 :"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:id="@+id/et_device_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:hint="请输入设备编号"
+                    android:paddingEnd="10dp"
+                    android:inputType="text"
+                    android:textColor="@color/tv_content"
+                    android:layout_toRightOf="@+id/tv_device_number"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:maxLines="1"
+                    android:paddingStart="20dp"
+                    android:gravity="end"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layerType="software"
+                    android:layout_toRightOf="@+id/tv_device_number"
+                    android:layout_below="@+id/et_device_number"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/color_line"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="15dp"
+                android:visibility="gone"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/tv_factory_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="厂 家 编 号 :"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:id="@+id/et_factory_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_factory_number"
+                    android:hint="请输入厂家编号"
+                    android:paddingEnd="10dp"
+                    android:inputType="text"
+                    android:paddingStart="20dp"
+                    android:textColor="@color/tv_content"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:gravity="end"
+                    android:maxLines="1"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layerType="software"
+                    android:layout_toRightOf="@+id/tv_factory_number"
+                    android:layout_below="@+id/et_factory_number"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/color_line"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="15dp"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/tv_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="使用者姓名:"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:id="@+id/et_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_user_name"
+                    android:paddingEnd="10dp"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:textColor="@color/tv_content"
+                    android:paddingStart="20dp"
+                    android:maxLines="1"
+                    android:gravity="end"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layerType="software"
+                    android:layout_toRightOf="@+id/tv_user_name"
+                    android:layout_below="@+id/et_user_name"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/color_line"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="15dp"
+                android:visibility="gone"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/tv_device_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="设 备 类 型 :"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:id="@+id/et_device_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_device_type"
+                    android:hint="请输入设备类型"
+                    android:paddingEnd="10dp"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:textColor="@color/tv_content"
+                    android:maxLines="1"
+                    android:paddingStart="20dp"
+                    android:gravity="end"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layerType="software"
+                    android:layout_toRightOf="@+id/tv_device_type"
+                    android:layout_below="@+id/et_device_type"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/color_line"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="15dp"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/tv_phone_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手    机    号:"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:id="@+id/et_phone_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_phone_number"
+                    android:paddingEnd="10dp"
+                    android:maxLength="11"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:textColor="@color/tv_content"
+                    android:paddingStart="20dp"
+                    android:maxLines="1"
+                    android:inputType="phone"
+                    android:gravity="end"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layerType="software"
+                    android:layout_toRightOf="@+id/tv_phone_number"
+                    android:layout_below="@+id/et_phone_number"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/color_line"/>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/color_F1F1F1"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="15dp"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/tv_sos_number1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOS号码1:"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:id="@+id/et_sos_number1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_sos_number1"
+                    android:hint="请输入SOS号码1"
+                    android:paddingEnd="10dp"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:maxLength="11"
+                    android:textColor="@color/tv_content"
+                    android:inputType="phone"
+                    android:paddingStart="20dp"
+                    android:maxLines="1"
+                    android:gravity="end"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layerType="software"
+                    android:layout_toRightOf="@+id/tv_sos_number1"
+                    android:layout_below="@+id/et_sos_number1"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/color_line"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="15dp"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/tv_sos_number2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOS号码1:"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:id="@+id/et_sos_number2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_sos_number2"
+                    android:hint="请输入SOS号码2"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:inputType="phone"
+                    android:textColor="@color/tv_content"
+                    android:paddingEnd="10dp"
+                    android:paddingStart="20dp"
+                    android:maxLength="11"
+                    android:maxLines="1"
+                    android:gravity="end"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layerType="software"
+                    android:layout_toRightOf="@+id/tv_sos_number2"
+                    android:layout_below="@+id/et_sos_number2"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/color_line"/>
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:paddingStart="20dp"
+                android:paddingEnd="15dp"
+                android:layout_height="50dp">
+
+                <TextView
+                    android:id="@+id/tv_sos_number3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SOS号码3:"
+                    android:textSize="16sp"
+                    android:layout_centerVertical="true"/>
+
+                <EditText
+                    android:id="@+id/et_sos_number3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/tv_sos_number3"
+                    android:hint="请输入SOS号码3"
+                    android:layout_centerVertical="true"
+                    android:background="@null"
+                    android:paddingStart="20dp"
+                    android:maxLines="1"
+                    android:maxLength="11"
+                    android:textColor="@color/tv_content"
+                    android:inputType="phone"
+                    android:gravity="end"
+                    android:paddingEnd="10dp"
+                    android:textSize="16sp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2px"
+                    android:layerType="software"
+                    android:layout_toRightOf="@+id/tv_sos_number3"
+                    android:layout_below="@+id/et_sos_number3"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@color/color_line"/>
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_add"
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:text="确    定"
+                android:textSize="20sp"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:background="@drawable/ic_bg_login"
+                android:layout_marginBottom="15dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="15dp"
+                android:background="@color/color_F1F1F1"/>
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>
+

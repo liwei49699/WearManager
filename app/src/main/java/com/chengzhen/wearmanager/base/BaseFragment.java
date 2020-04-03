@@ -1,9 +1,10 @@
-package com.chengzhen.wearmanager;
+package com.chengzhen.wearmanager.base;
 
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +18,10 @@ import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
+import com.chengzhen.wearmanager.event.EmptyEvent;
+import com.chengzhen.wearmanager.view.LoadingDialog;
+import com.chengzhen.wearmanager.R;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -35,10 +40,12 @@ public abstract class BaseFragment extends Fragment {
     private LoadingDialog mLoadingDialog;
     Unbinder unbinder;
     protected LinearLayout mLlFragmentRoot;
-    private TextView mTvFragmentTitle;
+    protected TextView mTvFragmentTitle;
     private TextView mTvRightMore;
     private ImageView mIvFragmentMore;
     private LinearLayout mLlAdd;
+
+    public final String TAG = getClass().getSimpleName();
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -140,7 +147,12 @@ public abstract class BaseFragment extends Fragment {
                     .setCancelable(false)
                     .create();
         }
+
         initView();
+        mViewCreated = true;
+        if(mFragmentVisible && !mHasLoad) {
+            mHasLoad = true;
+        }
         getData();
     }
 
@@ -153,9 +165,23 @@ public abstract class BaseFragment extends Fragment {
         super.onHiddenChanged(hidden);
     }
 
+    private boolean mFragmentVisible;
+    private boolean mViewCreated;
+    private boolean mHasLoad;
+
     @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
+
+        if(isVisibleToUser) {
+            mFragmentVisible = true;
+            if(mViewCreated && !mHasLoad) {
+                mHasLoad = true;
+//                getData();
+            }
+        } else {
+            mFragmentVisible = false;
+        }
     }
 
     @Override

@@ -4,17 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activity.MainActivity">
 
     <net.lucode.hackware.magicindicator.MagicIndicator
         android:id="@+id/mi_bottom_nav"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="@color/colorBgNormal"
+        android:background="@color/white"
         android:layout_alignParentBottom="true"/>
 
-    <com.chengzhen.wearmanager.ScrollViewPager
+    <com.chengzhen.wearmanager.view.ScrollViewPager
         android:id="@+id/vp_main"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -22,5 +22,58 @@
         app:layout_constraintBottom_toTopOf="@+id/mi_bottom_nav"
         android:overScrollMode="never"
         android:scrollbars="none"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_bottom_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <com.ruffian.library.widget.RView
+            android:layout_width="66dp"
+            android:layout_height="33dp"
+            app:background_normal="@color/color_F1F1F1"
+            android:layout_above="@+id/title_text"
+            app:corner_radius_bottom_right="66dp"
+            app:corner_radius_bottom_left="66dp"/>
+
+        <com.ruffian.library.widget.RRelativeLayout
+            android:id="@+id/rrl_img"
+            android:layout_width="58dp"
+            android:layout_height="58dp"
+            app:corner_radius="58dp"
+            android:elevation="1dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="4dp"
+            app:background_normal="@color/white">
+
+            <ImageView
+                android:id="@+id/title_img"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:scaleType="centerCrop"
+                android:layout_centerInParent="true"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/ic_launcher"/>
+
+        </com.ruffian.library.widget.RRelativeLayout>
+
+        <TextView
+            android:id="@+id/title_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            android:text="报警"
+            android:visibility="invisible"
+            android:layout_below="@+id/rrl_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="3dp"/>
+
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

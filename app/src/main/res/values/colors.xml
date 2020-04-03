@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#4282f4</color>
-    <color name="colorPrimaryDark">#4282f4</color>
-    <color name="colorAccent">#4282f4</color>
+
+
+    <color name="colorPrimarySet">#00C183</color>
+
+
+    <color name="colorPrimary">@color/colorPrimarySet</color>
+    <color name="colorPrimaryDark">#FFFFFF</color>
+    <color name="colorAccent">@color/colorPrimarySet</color>
 
     <color name="colorBgNormal">#E6E6E6</color>
     <color name="colorTvNormal">#2B2B2B</color>
@@ -11,15 +16,30 @@
     <color name="color_e6">#E6E6E6</color>
     <color name="color_f5">#F5F5F5</color>
 
-    <color name="tv_content">#999999</color>
+    <color name="tv_content">#777777</color>
     <color name="v_line">#DDDDDD</color>
     <color name="tv_normal">#333333</color>
     <color name="space">#EEEEEE</color>
+    <color name="space_line">#CFCFCF</color>
+    <color name="space_short">@color/color_F1F1F1</color>
 
     <color name="colorPrimaryPress">#035DFC</color>
     <color name="tv_hint">#333333</color>
     <color name="color_333333">#333333</color>
     <color name="color_666666">#666666</color>
+
+    <color name="color_939393">#939393</color>
+    <color name="color_CBCBCB">#CBCBCB</color>
+    <color name="color_5D5D5D">#5D5D5D</color>
+    <color name="color_B1B1B1">#B1B1B1</color>
+    <color name="color_F1F1F1">#F1F1F1</color>
+
+    <color name="color_red_abnormal">#F74954</color>
+    <color name="color_line">#EFEFEF</color>
+    <color name="color_tv_list">#666666</color>
+    <color name="color_green_dark">#00A99D</color>
+    <color name="color_green_light">#96DDCB</color>
+    <color name="color_green_light_alpha">#99C4F1E2</color>
 
 
 </resources>

@@ -1,21 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
-        <bitmap
+        <color
             android:gravity="fill"
-            android:src="@mipmap/launch_bg"
-            android:tileMode="disabled"></bitmap>
+            android:color="@color/white"
+            android:tileMode="disabled"/>
     </item>
     <item>
         <bitmap
-            android:gravity="center"
-            android:src="@mipmap/launch_center"
-            android:tileMode="disabled"></bitmap>
-    </item>
-    <item android:bottom="60dp">
-        <bitmap
-            android:gravity="bottom"
-            android:src="@mipmap/launch_bottom"
-            android:tileMode="disabled"></bitmap>
+            android:gravity="bottom|fill"
+            android:src="@drawable/ic_bg_splash"
+            android:tileMode="disabled"/>
     </item>
 </layer-list>

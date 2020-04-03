@@ -1,4 +1,4 @@
-package com.chengzhen.wearmanager;
+package com.chengzhen.wearmanager.view;
 
 import android.content.Context;
 import android.util.AttributeSet;

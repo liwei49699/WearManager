@@ -1,4 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android">
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape = "rectangle">
+    <size android:height="40dp"
+        android:width="72dp"/>
+    <solid android:color = "#f74b4b" />
 
-</selector>
+    <corners
+        android:bottomLeftRadius = "60dp"
+        android:bottomRightRadius = "60dp"
+        android:topLeftRadius ="0dp"
+        android:topRightRadius ="0dp"/>
+
+<!--&lt;!&ndash;    <shape android:shape="oval">&ndash;&gt;-->
+<!--&lt;!&ndash;        <stroke android:width="2dp" android:color="#b8c1d1" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <solid android:color="#ffffff" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <size android:width="12dp" android:height="12dp" />&ndash;&gt;-->
+<!--&lt;!&ndash;    </shape>&ndash;&gt;-->
+</shape>
+<!--<layer-list xmlns:android="http://schemas.android.com/apk/res/android">-->
+<!--    <item>-->
+<!--        <shape android:shape="oval">-->
+<!--            <solid android:color="#c5cedb" />-->
+<!--            <size android:width="70dp" android:height="70dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--    <item android:bottom="17dp" android:left="17dp" android:right="17dp" android:top="17dp">-->
+<!--        <shape android:shape="oval">-->
+<!--            <solid android:color="@color/white" />-->
+<!--            <size android:width="70dp" android:height="70dp" />-->
+<!--        </shape>-->
+<!--    </item>-->
+<!--</layer-list>-->

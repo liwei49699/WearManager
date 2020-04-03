@@ -1,8 +1,9 @@
-package com.chengzhen.wearmanager;
+package com.chengzhen.wearmanager.base;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,6 +15,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import com.chengzhen.wearmanager.event.EmptyEvent;
+import com.chengzhen.wearmanager.view.LoadingDialog;
+import com.chengzhen.wearmanager.R;
 import com.chengzhen.wearmanager.manager.ActivityManager;
 
 import org.greenrobot.eventbus.EventBus;
@@ -34,6 +38,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     private TextView mTvCenterTitle;
     private ImageView mIvLeftClose;
     private ImageView mIvRightMore;
+    private RelativeLayout mRlCall;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,10 +58,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         mTvCenterTitle = findViewById(R.id.tv_center_title);
         mIvLeftClose = findViewById(R.id.iv_left_close);
         mIvRightMore = findViewById(R.id.iv_right_more);
+        mRlCall = findViewById(R.id.rl_call);
 
         mIvLeft.setOnClickListener(v -> finish());
         mIvLeftClose.setVisibility(View.GONE);
         mIvRightMore.setVisibility(View.GONE);
+        mRlCall.setVisibility(View.GONE);
 
         View vgContent = getLayoutInflater().inflate(getLayoutID(), null);
         mLlRoot.addView(vgContent, new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
@@ -125,6 +132,12 @@ public abstract class BaseActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ActivityManager.getInstance().setCurrentActivity(this);
+    }
+
     protected void showProDialogHint(){
         if(!mLoadingDialog.isShowing()){
             mLoadingDialog.show();
@@ -166,6 +179,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         mTvCenterTitle.setText(title);
     }
 
+
     protected void setCloseClickListener(View.OnClickListener listener){
 
         mIvLeftClose.setVisibility(View.VISIBLE);
@@ -176,5 +190,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         mIvRightMore.setVisibility(View.VISIBLE);
         mIvRightMore.setOnClickListener(listener);
+    }
+
+    protected void setCallClickListener(View.OnClickListener listener){
+
+        mRlCall.setVisibility(View.VISIBLE);
+        mRlCall.setOnClickListener(listener);
     }
 }

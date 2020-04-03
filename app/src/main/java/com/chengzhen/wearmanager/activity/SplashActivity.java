@@ -1,8 +1,10 @@
-package com.chengzhen.wearmanager;
+package com.chengzhen.wearmanager.activity;
 
 import android.Manifest;
 import android.os.Handler;
 
+import com.chengzhen.wearmanager.Constant;
+import com.chengzhen.wearmanager.R;
 import com.chengzhen.wearmanager.activity.LoginActivity;
 import com.chengzhen.wearmanager.activity.MainActivity;
 import com.chengzhen.wearmanager.base.BaseActivity;
@@ -26,6 +28,8 @@ public class SplashActivity extends BaseActivity {
             android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
             android.Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.READ_PHONE_STATE};
+    private Disposable mSubscribe;
+    private RxPermissions mRxPermissions;
 
     @Override
     protected int getLayoutID() {
@@ -36,11 +40,17 @@ public class SplashActivity extends BaseActivity {
     protected void init() {
 
         //状态栏颜色，不写默认透明色
-        ImmersionBar.with(this)
-                .transparentBar()
-                .fitsSystemWindows(true)
-                .statusBarDarkFont(true)
-                .init();
+//        ImmersionBar.with(this)
+//                .transparentBar()
+//                .fitsSystemWindows(true)
+//                .statusBarDarkFont(true)
+//                .init();
+    }
+
+    @Override
+    protected void getData() {
+
+        mRxPermissions = new RxPermissions(this);
 
         mHandler = new Handler();
         mHandler.postDelayed(this::checkPermissions,1500);
@@ -48,8 +58,7 @@ public class SplashActivity extends BaseActivity {
 
     private void checkPermissions() {
 
-        RxPermissions rxPermissions = new RxPermissions(this);
-        Disposable subscribe = rxPermissions.request(needPermissions).subscribe(new Consumer<Boolean>() {
+        mSubscribe = mRxPermissions.request(needPermissions).subscribe(new Consumer<Boolean>() {
             @Override
             public void accept(Boolean aBoolean) throws Exception {
 
@@ -57,6 +66,7 @@ public class SplashActivity extends BaseActivity {
                 boolean login = appPreferences.getBoolean(Constant.LOGIN_SIGN, false);
                 if(login) {
                     startActivity(MainActivity.class);
+//                    startActivity(SignsDetailsActivity.class);
                 } else {
                     startActivity(LoginActivity.class);
                 }
@@ -66,16 +76,13 @@ public class SplashActivity extends BaseActivity {
     }
 
     @Override
-    protected void getData() {
-
-    }
-
-    @Override
     protected void onDestroy() {
         super.onDestroy();
         if(mHandler != null) {
-
             mHandler.removeCallbacksAndMessages(null);
+        }
+        if(mSubscribe != null && !mSubscribe.isDisposed()) {
+            mSubscribe.dispose();
         }
     }
 }

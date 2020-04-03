@@ -1,4 +1,4 @@
 package com.chengzhen.wearmanager.bean;
 
-public class ResetPwdResponse {
+public class ResetPwdResponse extends BaseResponse<String> {
 }

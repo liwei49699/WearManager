@@ -1,4 +1,4 @@
-package com.chengzhen.wearmanager;
+package com.chengzhen.wearmanager.event;
 
 public class EmptyEvent {
 }

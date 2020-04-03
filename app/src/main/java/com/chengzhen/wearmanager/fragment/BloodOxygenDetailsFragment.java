@@ -1,16 +1,21 @@
 package com.chengzhen.wearmanager.fragment;
 
 import android.graphics.Color;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.chengzhen.wearmanager.Constant;
 import com.chengzhen.wearmanager.R;
+import com.chengzhen.wearmanager.adapter.BloodOxygenAdapter;
 import com.chengzhen.wearmanager.adapter.TemperatureAdapter;
 import com.chengzhen.wearmanager.base.BaseFragment;
 import com.chengzhen.wearmanager.util.SignsValueFormatter;
+import com.chengzhen.wearmanager.view.CustomLoadMoreView;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.LimitLine;
@@ -20,39 +25,79 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 
+import net.grandcentrix.tray.AppPreferences;
+
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 
-public class TemperatureDetailsFragment extends BaseFragment {
+public class BloodOxygenDetailsFragment extends BaseFragment {
 
-    @BindView(R.id.chart_signs)
     LineChart mChartSigns;
     @BindView(R.id.rv_form)
     RecyclerView mRvForm;
     @BindView(R.id.v_line)
     View mVline;
-    private TemperatureAdapter mTemperatureAdapter;
+    private BloodOxygenAdapter mBloodOxygenAdapter;
+    private String mSignsId;
+    private String mSignsNo;
+    private AppPreferences mAppPreferences;
+    private int mCurrentPage = 1;
+
+    public static BloodOxygenDetailsFragment getInstance(String deviceId, String deviceNo) {
+        BloodOxygenDetailsFragment fragment = new BloodOxygenDetailsFragment();
+        Bundle args = new Bundle();
+        args.putString(Constant.SIGNS_ID, deviceId);
+        args.putString(Constant.SIGNS_NO, deviceNo);
+        fragment.setArguments(args);
+        return fragment;    }
 
     @Override
     protected int getLayoutId() {
-        return R.layout.fragment_temperature_details;
+        return R.layout.fragment_blood_oxygen_details;
     }
 
     @Override
 
     protected void initView() {
-        initLineChart();
+//        initLineChart();
         initRecycleView();
+
+        if (getArguments() != null) {
+            mSignsId = getArguments().getString(Constant.SIGNS_ID);
+            mSignsNo = getArguments().getString(Constant.SIGNS_NO);
+        }
+
+        mAppPreferences = new AppPreferences(mContext);
+//        mRefreshForm.setOnRefreshListener(() -> {
+//
+//            mCurrentPage = 1;
+//            obtainHistoryChar();
+//            obtainHistoryList();
+//        });
     }
 
     private void initRecycleView() {
 
-        mTemperatureAdapter = new TemperatureAdapter();
+        mBloodOxygenAdapter = new BloodOxygenAdapter();
         mRvForm.setLayoutManager(new LinearLayoutManager(mContext));
+        mRvForm.setAdapter(mBloodOxygenAdapter);
 
-        mRvForm.setAdapter(mTemperatureAdapter);
+//        mBloodOxygenAdapter.setLoadMoreView(new CustomLoadMoreView());
+//        mBloodOxygenAdapter.setOnLoadMoreListener(this::obtainHistoryList,mRvForm);
+
+        initHeadView();
+    }
+
+    private void initHeadView() {
+
+        View headView = LayoutInflater.from(mContext).inflate(R.layout.head_blood_oxygen, mRvForm, false);
+        mBloodOxygenAdapter.addHeaderView(headView);
+        mChartSigns = headView.findViewById(R.id.chart_signs);
+//        mTvHighPressureShow = headView.findViewById(R.id.tv_high_pressure_show);
+//        mTvHighPressureTimeShow = headView.findViewById(R.id.tv_high_pressure_time_show);
+        initLineChart();
     }
 
     @Override
@@ -72,7 +117,7 @@ public class TemperatureDetailsFragment extends BaseFragment {
         } else {
             mVline.setVisibility(View.INVISIBLE);
         }
-        mTemperatureAdapter.setNewData(stringList);
+        mBloodOxygenAdapter.setNewData(stringList);
     }
 
     private void initLineChart() {

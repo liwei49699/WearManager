@@ -1,18 +1,15 @@
 package com.chengzhen.wearmanager.adapter;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.chengzhen.wearmanager.R;
 
-import java.util.List;
+public class BloodOxygenAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
 
-public class TemperatureAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
-
-    public TemperatureAdapter() {
-        super(R.layout.item_temperature);
+    public BloodOxygenAdapter() {
+        super(R.layout.item_blood_oxygen);
     }
 
     @Override

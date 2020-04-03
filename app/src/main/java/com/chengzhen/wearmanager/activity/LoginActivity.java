@@ -1,19 +1,20 @@
-package com.chengzhen.wearmanager;
+package com.chengzhen.wearmanager.activity;
 
 import android.content.Context;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import com.blankj.utilcode.util.GsonUtils;
 import com.blankj.utilcode.util.KeyboardUtils;
 import com.blankj.utilcode.util.ToastUtils;
+import com.chengzhen.wearmanager.Constant;
+import com.chengzhen.wearmanager.R;
+import com.chengzhen.wearmanager.base.BaseActivity;
 import com.chengzhen.wearmanager.bean.LoginResponse;
 import com.chengzhen.wearmanager.jpush.TagAliasOperatorHelper;
 import com.gyf.immersionbar.ImmersionBar;
@@ -84,9 +85,9 @@ public class LoginActivity extends BaseActivity {
 
     private void login() {
 
-        showProDialogHint("登录中。。。");
+        showProDialogHint();
         //http://192.168.18.30:8080/lpro_lgb/service/api/ApiUserInfo/login?name=lisi&password=123456
-        String usr = "http://61.155.106.23:8080/lpro-lgb/service/api/ApiUserInfo/login";
+        String usr = Constant.URL + "/ApiUserInfo/login";
 
         RxHttp.postForm(usr)
                 .add("name",accountStr)
@@ -95,7 +96,6 @@ public class LoginActivity extends BaseActivity {
                 .observeOn(AndroidSchedulers.mainThread())
                 .as(RxLife.as(this))
                 .subscribe(loginResponse -> {
-
 
                     int error = loginResponse.getCode();
                     if(error == 0) {
@@ -111,7 +111,7 @@ public class LoginActivity extends BaseActivity {
                         String userJson = GsonUtils.toJson(userInfo);
                         mAppPreferences.put(Constant.JSON_USER,userJson);
 
-                        TagAliasOperatorHelper.onTagAliasAction(mContext,3,userInfo.getId() + "");
+                        TagAliasOperatorHelper.onTagAliasAction(mContext,3,userInfo.getName() + "");
 
                     } else {
                         ToastUtils.showShort(loginResponse.getMsg());
