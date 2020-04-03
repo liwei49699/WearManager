@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.SignsDetailsActivity"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:padding="10dp"
+        android:orientation="vertical">
+
+        <com.ruffian.library.widget.RRelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:border_color_normal="@color/color_green_dark"
+            app:border_width_normal="1dp">
+            
+            <ImageView
+                android:id="@+id/tv_temperature_sign"
+                android:layout_width="64dp"
+                android:layout_height="52dp"
+                android:background="@color/color_green_light"
+                android:src="@drawable/ic_blood_pressure_details"
+                android:layout_margin="1dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:gravity="center"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_toEndOf="@+id/tv_temperature_sign"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="高压/舒张压:"
+                        android:textSize="11sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/color_666666"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="163mmHg"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_alignParentBottom="true"
+                        android:textColor="#ED1C24"
+                        android:layout_marginBottom="5dp"
+                        android:layout_marginStart="5dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3/08 12:25:03"
+                        android:textSize="9sp"
+                        android:textColor="@color/color_green_dark"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:layout_alignParentEnd="true"/>
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="2px"
+                    android:layout_height="40dp"
+                    android:layout_gravity="center_vertical"
+                    android:background="@color/color_green_dark"/>
+
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="52dp"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="高压/舒张压:"
+                        android:textSize="11sp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="5dp"
+                        android:textColor="@color/color_666666"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="163mmHg"
+                        android:textStyle="bold"
+                        android:layout_alignParentBottom="true"
+                        android:layout_marginBottom="5dp"
+                        android:textSize="16sp"
+                        android:textColor="@color/color_green_dark"
+                        android:layout_marginStart="5dp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3/08 12:25:03"
+                        android:textSize="9sp"
+                        android:textColor="@color/color_green_dark"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginEnd="8dp"
+                        android:layout_alignParentEnd="true"/>
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+        </com.ruffian.library.widget.RRelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:id="@+id/iv_history_line"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_history_line"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="历史曲线"
+                android:textSize="15sp"
+                android:textColor="@color/color_green_dark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/iv_history_line"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="9dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_red_value_line"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_333333"
+                    android:textSize="9sp"
+                    android:layout_marginStart="1dp"
+                    android:text="高压值"/>
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="9dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginStart="3dp"
+                    android:src="@drawable/ic_green_value_line"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_333333"
+                    android:textSize="9sp"
+                    android:layout_marginStart="1dp"
+                    android:text="低压值"/>
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="9dp"
+                    android:scaleType="centerCrop"
+                    android:layout_marginStart="3dp"
+                    android:src="@drawable/ic_yellow_value_line"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_333333"
+                    android:textSize="9sp"
+                    android:layout_marginStart="1dp"
+                    android:text="高压标准"/>
+
+                <ImageView
+                    android:layout_width="23dp"
+                    android:layout_height="9dp"
+                    android:layout_marginStart="3dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ic_gray_value_line"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/color_333333"
+                    android:textSize="9sp"
+                    android:layout_marginStart="1dp"
+                    android:text="低压标准"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart_signs"
+            android:layout_width="match_parent"
+            android:layout_height="360dp"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <ImageView
+                android:id="@+id/iv_history_form"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_data_form"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="数据列表"
+                android:textSize="15sp"
+                android:textColor="@color/color_green_dark"
+                android:textStyle="bold"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/iv_history_form"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="10dp"
+            android:background="@color/color_green_dark"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:text="测量时间"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/color_green_light"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:text="高压/舒张压"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/color_green_light"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:text="低压/收缩压"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:background="@color/color_green_light"/>
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_green_dark"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"/>
+
+        <View
+            android:id="@+id/v_line"
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:background="@color/color_green_dark"/>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
