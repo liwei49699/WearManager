@@ -1,4 +1,4 @@
-package tohouse.jinmai.com.tohouse.content.firstpage.view;
+package com.chengzhen.wearmanager.view;
 
 import android.content.Context;
 import android.graphics.Canvas;
@@ -12,8 +12,8 @@ import android.widget.ListView;
 import android.widget.SectionIndexer;
 import android.widget.TextView;
 
-import tohouse.jinmai.com.tohouse.R;
-import tohouse.jinmai.com.tohouse.comment.util.DeviceUtil;
+import com.blankj.utilcode.util.ConvertUtils;
+import com.chengzhen.wearmanager.R;
 
 /**
  * 英文字母A-Z过滤控件
@@ -60,7 +60,7 @@ public class SideBar extends View {
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		//改进为  获取SideBar视图本身的高度 进行计算 设置字母所占高度
 		if(isFirst){
-			m_nItemHeight = (h- DeviceUtil.dp2px(getContext(),12))/l.length;
+			m_nItemHeight = (h- ConvertUtils.dp2px(12))/l.length;
 			isFirst = false;
 		}
 		super.onSizeChanged(w, h, oldw, oldh);
@@ -131,7 +131,7 @@ public class SideBar extends View {
 
 		Paint paint = new Paint();
 		paint.setColor(getResources().getColor(R.color.black_70));
-		paint.setTextSize(DensityUtil.sp2Px(getContext(),13));
+		paint.setTextSize(ConvertUtils.sp2px(13));
 		Typeface font = Typeface.create(Typeface.SANS_SERIF, Typeface.NORMAL);
 		paint.setTypeface(font);
 		paint.setFlags(Paint.ANTI_ALIAS_FLAG);
@@ -142,5 +142,4 @@ public class SideBar extends View {
 		}
 		super.onDraw(canvas);
 	}
-
 }

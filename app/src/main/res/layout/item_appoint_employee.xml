@@ -10,7 +10,7 @@
         android:layout_height="30dp"
         android:text="索引"
         android:gravity="center_vertical"
-        android:textColor="@color/back_text_time"
+        android:textColor="#ACAFB4"
         android:textSize="16sp"
         android:paddingLeft="15dp"/>
     <TextView

@@ -58,7 +58,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
@@ -68,57 +68,75 @@ dependencies {
 
     //替换shape
     implementation 'com.ruffian.library:RWidgetHelper:1.0.8'
+
     //绑定view
     implementation 'com.jakewharton:butterknife:10.2.0'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.0'
+
     //design包
     implementation 'com.google.android.material:material:1.0.0'
+
     //图片加载
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+
     //异步事件
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.17'
+
     //权限
     implementation 'com.github.tbruyelle:rxpermissions:0.10.2'
+
     //列表适配器
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.50'
+
     //json解析
     implementation 'com.google.code.gson:gson:2.8.6'
+
     //屏幕适配
     implementation 'me.jessyan:autosize:1.2.0'
+
     //事件通讯
     implementation 'org.greenrobot:eventbus:3.1.1'
+
     //底部导航
     implementation 'com.github.hackware1993:MagicIndicator:1.6.0'
-
     implementation 'com.rxjava.rxhttp:rxhttp:1.4.1'
-    annotationProcessor 'com.rxjava.rxhttp:rxhttp-compiler:1.4.1' //注解处理器，生成RxHttp类
+    annotationProcessor 'com.rxjava.rxhttp:rxhttp-compiler:1.4.1'
 
-    implementation 'com.rxjava.rxlife:rxlife:1.1.0'  //页面销毁，关闭请求，非必须
+    //注解处理器，生成RxHttp类
+    implementation 'com.rxjava.rxlife:rxlife:1.1.0'
+
+    //页面销毁，关闭请求，非必须
 
     //常用工具类
     implementation 'com.blankj:utilcodex:1.26.0'
-
     implementation 'net.grandcentrix.tray:tray:0.12.0'
 
-//    implementation 'com.amap.api:map2d:6.0.0'
+    //    implementation 'com.amap.api:map2d:6.0.0'
     implementation 'com.amap.api:3dmap:7.2.0'
     implementation 'com.amap.api:search:7.1.0'
+    implementation 'cn.jiguang.sdk:jpush:3.5.4'
 
-    implementation 'cn.jiguang.sdk:jpush:3.5.4'  // 此处以JPush 3.5.4 版本为例。
-    implementation 'cn.jiguang.sdk:jcore:2.2.6'  // 此处以JCore 2.2.6 版本为例。
+    // 此处以JPush 3.5.4 版本为例。
+    implementation 'cn.jiguang.sdk:jcore:2.2.6'
 
-//    implementation 'com.tencent.bugly:crashreport:3.1.0'
+    // 此处以JCore 2.2.6 版本为例。
+
+    //    implementation 'com.tencent.bugly:crashreport:3.1.0'
+
     //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.2.0
     implementation 'com.tencent.bugly:nativecrashreport:3.7.1'
+
     //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
     implementation 'com.tencent.bugly:crashreport_upgrade:1.4.2'
-//其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+
+    //其中latest.release指代最新版本号，也可以指定明确的版本号，例如1.2.0
+
     //状态栏
     implementation 'com.gyf.immersionbar:immersionbar:3.0.0'
     implementation 'com.kongzue.dialog_v3x:dialog:3.1.8'
     implementation 'com.github.mcxtzhang:SwipeDelMenuLayout:V1.3.0'
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
-
+    implementation files('libs/pinyin4j-2.5.0.jar')
 }

@@ -378,7 +378,6 @@ public class HeartRateDetailsFragment extends BaseFragment {
             mChartSigns.getData().notifyDataChanged();
             mChartSigns.notifyDataSetChanged();
         } else {
-
             setDy = new LineDataSet(valuesDy, "DataSet_dy");
             setDy.setAxisDependency(YAxis.AxisDependency.LEFT);
             setDy.setColor(Color.parseColor("#15998B"));

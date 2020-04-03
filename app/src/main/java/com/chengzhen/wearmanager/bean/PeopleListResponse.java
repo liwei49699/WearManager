@@ -71,6 +71,25 @@ public class PeopleListResponse extends BaseResponse<List<PeopleListResponse.Dat
         private String offset;
         private String limit;
 
+        public String getFirstSpell() {
+            return firstSpell;
+        }
+
+        public void setFirstSpell(String firstSpell) {
+            this.firstSpell = firstSpell;
+        }
+
+        public String getAllSpell() {
+            return allSpell;
+        }
+
+        public void setAllSpell(String allSpell) {
+            this.allSpell = allSpell;
+        }
+
+        private String firstSpell;
+        private String allSpell;
+
         public int getId() {
             return id;
         }

@@ -33,5 +33,6 @@ public class HeartRateAdapter extends BaseQuickAdapter<BloodPressureListResponse
                 helper.setVisible(R.id.v_line,true);
                 helper.setVisible(R.id.v_line_end,false);
             }
-        }    }
+        }
+    }
 }

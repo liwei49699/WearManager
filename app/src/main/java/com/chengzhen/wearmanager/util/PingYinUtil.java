@@ -1,4 +1,4 @@
-package tohouse.jinmai.com.tohouse.content.firstpage.view;
+package com.chengzhen.wearmanager.util;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;

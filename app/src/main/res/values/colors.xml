@@ -41,5 +41,6 @@
     <color name="color_green_light">#96DDCB</color>
     <color name="color_green_light_alpha">#99C4F1E2</color>
 
+    <color name="black_70">#70000000</color>
 
 </resources>
